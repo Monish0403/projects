@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Information - Government Polytechnic</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Student Information</h1>
+        <h2>Government Polytechnic, Manually - Computer Science (Final Year 2023-2026)</h2>
+
+        <div class="student-info-card">
+            <h3>Student Details</h3>
+            <p><strong>Name:</strong> [Student's Full Name]</p>
+            <p><strong>Email Address:</strong> [student_email@example.com]</p>
+            <p><strong>Physical Address:</strong> [Student's Physical Address]</p>
+            <p><strong>Register Number:</strong> [Student's Register Number]</p>
+            <p><strong>Phone Number:</strong> [Student's Phone Number]</p>
+        </div>
+
+        <!-- You can add more student information cards as needed -->
+        <!-- <div class="student-info-card">
+            <h3>Another Student Details</h3>
+            <p><strong>Name:</strong> Another Student Name</p>
+            <p><strong>Email Address:</strong> another_email@example.com</p>
+            <p><strong>Physical Address:</strong> Another Address</p>
+            <p><strong>Register Number:</strong> Another Register No.</p>
+            <p><strong>Phone Number:</strong> Another Phone No.</p>
+        </div> -->
+
+    </div>
+</body>
+</html>
+
+
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 800px;
+    margin: 30px auto;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #0056b3;
+    margin-bottom: 10px;
+}
+
+h2 {
+    text-align: center;
+    color: #007bff;
+    font-size: 1.2em;
+    margin-bottom: 25px;
+}
+
+.student-info-card {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    background-color: #e9f7ff;
+}
+
+.student-info-card h3 {
+    color: #0056b3;
+    margin-top: 0;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #b3e0ff;
+    padding-bottom: 5px;
+}
+
+.student-info-card p {
+    margin-bottom: 8px;
+}
+
+.student-info-card strong {
+    color: #004085;
+}
