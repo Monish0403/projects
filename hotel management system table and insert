@@ -1,0 +1,249 @@
+CREATE TABLE Hotels (
+    HotelID INT PRIMARY KEY AUTO_INCREMENT,
+    HotelName VARCHAR(100) NOT NULL,
+    Address TEXT,
+    City VARCHAR(50),
+    State VARCHAR(50),
+    ZipCode VARCHAR(10),
+    ContactNumber VARCHAR(15),
+    Email VARCHAR(100),
+    StarRating INT
+);
+
+CREATE TABLE Guests (
+    GuestID INT PRIMARY KEY AUTO_INCREMENT,
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    DateOfBirth DATE,
+    Gender VARCHAR(10),
+    Address TEXT,
+    ContactNumber VARCHAR(15),
+    Email VARCHAR(100) UNIQUE NOT NULL,
+    Nationality VARCHAR(50),
+    PassportNumber VARCHAR(20) UNIQUE
+);
+
+CREATE TABLE RoomTypes (
+    RoomTypeID INT PRIMARY KEY AUTO_INCREMENT,
+    TypeName VARCHAR(50) NOT NULL,
+    Description TEXT,
+    PricePerNight DECIMAL(10, 2) NOT NULL,
+    Capacity INT
+);
+
+CREATE TABLE Rooms (
+    RoomID INT PRIMARY KEY AUTO_INCREMENT,
+    RoomNumber VARCHAR(10) NOT NULL UNIQUE,
+    HotelID INT NOT NULL,
+    RoomTypeID INT NOT NULL,
+    AvailabilityStatus VARCHAR(20), -- e.g., 'Available', 'Occupied', 'Maintenance'
+    FOREIGN KEY (HotelID) REFERENCES Hotels(HotelID),
+    FOREIGN KEY (RoomTypeID) REFERENCES RoomTypes(RoomTypeID)
+);
+
+CREATE TABLE Bookings (
+    BookingID INT PRIMARY KEY AUTO_INCREMENT,
+    GuestID INT NOT NULL,
+    RoomID INT NOT NULL,
+    CheckInDate DATE NOT NULL,
+    CheckOutDate DATE NOT NULL,
+    NumberOfAdults INT,
+    NumberOfChildren INT,
+    TotalPrice DECIMAL(10, 2) NOT NULL,
+    BookingStatus VARCHAR(20), -- e.g., 'Confirmed', 'Pending', 'Canceled', 'Checked-in', 'Checked-out'
+    PaymentStatus VARCHAR(20), -- e.g., 'Paid', 'Pending', 'Refunded'
+    Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (GuestID) REFERENCES Guests(GuestID),
+    FOREIGN KEY (RoomID) REFERENCES Rooms(RoomID)
+);
+
+CREATE TABLE Payments (
+    PaymentID INT PRIMARY KEY AUTO_INCREMENT,
+    BookingID INT NOT NULL,
+    PaymentDate DATETIME DEFAULT CURRENT_TIMESTAMP,
+    Amount DECIMAL(10, 2) NOT NULL,
+    PaymentMethod VARCHAR(50),
+    TransactionID VARCHAR(100),
+    FOREIGN KEY (BookingID) REFERENCES Bookings(BookingID)
+);
+
+CREATE TABLE Employees (
+    EmployeeID INT PRIMARY KEY AUTO_INCREMENT,
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    DateOfBirth DATE,
+    Gender VARCHAR(10),
+    Address TEXT,
+    ContactNumber VARCHAR(15),
+    Email VARCHAR(100) UNIQUE NOT NULL,
+    HireDate DATE,
+    Salary DECIMAL(10, 2),
+    EmployeeTypeID INT NOT NULL, -- Foreign Key to EmployeeTypes
+    ManagerID INT,                -- Self-referencing Foreign Key to Employees
+    DepartmentID INT NOT NULL,    -- Foreign Key to Departments
+    FOREIGN KEY (EmployeeTypeID) REFERENCES EmployeeTypes(EmployeeTypeID),
+    FOREIGN KEY (ManagerID) REFERENCES Employees(EmployeeID),
+    FOREIGN KEY (DepartmentID) REFERENCES Departments(DepartmentID)
+);
+
+CREATE TABLE Departments (
+    DepartmentID INT PRIMARY KEY AUTO_INCREMENT,
+    DepartmentName VARCHAR(50) NOT NULL,
+    DepartmentHeadID INT, -- Foreign Key to Employees
+    FOREIGN KEY (DepartmentHeadID) REFERENCES Employees(EmployeeID)
+);
+
+CREATE TABLE Accounts (
+    AccountID INT PRIMARY KEY AUTO_INCREMENT,
+    EmployeeID INT UNIQUE NOT NULL,
+    BankName VARCHAR(100),
+    AccountNumber VARCHAR(50),
+    PayrollFrequency VARCHAR(20),
+    TaxInformation TEXT,
+    FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID)
+);
+
+CREATE TABLE RawMaterials (
+    MaterialID INT PRIMARY KEY AUTO_INCREMENT,
+    MaterialName VARCHAR(100) NOT NULL,
+    CategoryID INT NOT NULL, -- Foreign Key to MaterialCategories
+    UnitOfMeasure VARCHAR(20),
+    CurrentStockQuantity DECIMAL(10, 2),
+    ReorderLevel DECIMAL(10, 2),
+    SupplierID INT NOT NULL, -- Foreign Key to Suppliers
+    LastPurchaseDate DATE,
+    UnitPrice DECIMAL(10, 2),
+    FOREIGN KEY (CategoryID) REFERENCES MaterialCategories(CategoryID),
+    FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID)
+);
+
+CREATE TABLE MaterialCategories (
+    CategoryID INT PRIMARY KEY AUTO_INCREMENT,
+    CategoryName VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE Suppliers (
+    SupplierID INT PRIMARY KEY AUTO_INCREMENT,
+    SupplierName VARCHAR(100) NOT NULL,
+    ContactPerson VARCHAR(100),
+    ContactNumber VARCHAR(15),
+    Email VARCHAR(100),
+    Address TEXT
+);
+
+INSERT INTO Hotels (HotelName, Address, City, State, ZipCode, ContactNumber, Email, StarRating)
+VALUES
+    ('Grand Hyatt Bangalore', '1, MG Road', 'Bengaluru', 'Karnataka', '560001', '080-12345678', 'grandhyatt@example.com', 5),
+    ('Taj Lands End Mumbai', 'Bandra Fort Road', 'Mumbai', 'Maharashtra', '400050', '022-98765432', 'tajlandsend@example.com', 5),
+    ('The Leela Palace Delhi', 'Chanakyapuri', 'New Delhi', 'Delhi', '110023', '011-23456789', 'leelapalace@example.com', 5),
+    ('Novotel Chennai OMR', 'Old Mahabalipuram Road', 'Chennai', 'Tamil Nadu', '600119', '044-87654321', 'novotelchennai@example.com', 4),
+    ('Radisson Blu Agra', 'Fatehabad Road', 'Agra', 'Uttar Pradesh', '282001', '0562-1234567', 'radissonblu@example.com', 4),
+    ('ITC Gardenia Bengaluru', 'Ashok Nagar', 'Bengaluru', 'Karnataka', '560025', '080-34567890', 'itcgardenia@example.com', 5),
+    ('The Oberoi Udaivilas Udaipur', 'Haridasji Ki Magri', 'Udaipur', 'Rajasthan', '313001', '0294-7890123', 'oberoiudaivilas@example.com', 5);
+
+INSERT INTO Guests (FirstName, LastName, DateOfBirth, Gender, Address, ContactNumber, Email, Nationality, PassportNumber)
+VALUES
+    ('Rohan', 'Sharma', '1985-03-15', 'Male', '10, Park Avenue, Bengaluru', '9876543210', 'rohan.sharma@example.com', 'Indian', 'P1234567'),
+    ('Priya', 'Singh', '1992-11-20', 'Female', '25, Gandhi Road, Mumbai', '8765432109', 'priya.singh@example.com', 'Indian', 'P8765432'),
+    ('David', 'Lee', '1978-06-01', 'Male', '100, Main Street, London', '+44-7890123456', 'david.lee@example.com', 'British', 'B1234567'),
+    ('Sophia', 'Chen', '1995-09-10', 'Female', '50, Orchard Road, Singapore', '+65-91234567', 'sophia.chen@example.com', 'Singaporean', 'S9876543'),
+    ('Maria', 'Garcia', '1980-01-25', 'Female', '8, Las Ramblas, Barcelona', '+34-654321098', 'maria.garcia@example.com', 'Spanish', 'E2345678'),
+    ('Amit', 'Patel', '1988-07-07', 'Male', '30, Silicon Valley, San Francisco', '+1-555-1234567', 'amit.patel@example.com', 'American', 'A3456789'),
+    ('Lena', 'Novak', '1990-04-12', 'Female', '12, Freedom Square, Prague', '+420-777-111222', 'lena.novak@example.com', 'Czech', 'C4567890'),
+    ('Ahmed', 'Khan', '1975-08-30', 'Male', '22, Dubai Marina, Dubai', '+971-50-9876543', 'ahmed.khan@example.com', 'Emirati', 'U5678901');
+
+INSERT INTO RoomTypes (TypeName, Description, PricePerNight, Capacity)
+VALUES
+    ('Standard Single', 'Comfortable room for one guest', 3000.00, 1),
+    ('Standard Double', 'Comfortable room for two guests', 4500.00, 2),
+    ('Deluxe King', 'Spacious room with a king-size bed', 6000.00, 2),
+    ('Executive Suite', 'Luxurious suite with separate living area', 10000.00, 3),
+    ('Presidential Suite', 'Premium suite with multiple rooms and amenities', 25000.00, 4),
+    ('Twin Beds', 'Room with two single beds', 4500.00, 2);
+
+INSERT INTO Rooms (RoomNumber, HotelID, RoomTypeID, AvailabilityStatus)
+VALUES
+    ('101', 1, 2, 'Available'),
+    ('102', 1, 1, 'Occupied'),
+    ('201', 1, 3, 'Available'),
+    ('202', 1, 3, 'Maintenance'),
+    ('301', 2, 4, 'Available'),
+    ('302', 2, 5, 'Occupied'),
+    ('401', 3, 3, 'Available'),
+    ('501', 4, 2, 'Available'),
+    ('601', 5, 1, 'Available'),
+    ('701', 6, 4, 'Available');
+
+INSERT INTO Bookings (GuestID, RoomID, CheckInDate, CheckOutDate, NumberOfAdults, NumberOfChildren, TotalPrice, BookingStatus, PaymentStatus, Timestamp)
+VALUES
+    (1, 1, '2025-08-10', '2025-08-15', 2, 0, 22500.00, 'Confirmed', 'Paid', '2025-08-01 10:30:00'),
+    (2, 3, '2025-09-01', '2025-09-03', 1, 0, 12000.00, 'Confirmed', 'Pending', '2025-07-28 14:00:00'),
+    (3, 5, '2025-10-05', '2025-10-10', 2, 1, 50000.00, 'Pending', 'Pending', '2025-08-01 11:00:00'),
+    (4, 7, '2025-08-20', '2025-08-22', 2, 0, 12000.00, 'Confirmed', 'Paid', '2025-07-20 16:15:00'),
+    (5, 9, '2025-09-15', '2025-09-18', 1, 0, 9000.00, 'Confirmed', 'Paid', '2025-07-10 09:00:00'),
+    (6, 10, '2025-09-25', '2025-09-28', 2, 2, 30000.00, 'Pending', 'Pending', '2025-08-02 12:45:00'),
+    (1, 4, '2025-11-01', '2025-11-03', 2, 0, 12000.00, 'Canceled', 'Refunded', '2025-08-01 15:00:00');
+
+INSERT INTO Payments (BookingID, PaymentDate, Amount, PaymentMethod, TransactionID)
+VALUES
+    (1, '2025-08-01 10:35:00', 22500.00, 'Credit Card', 'TXN123456789'),
+    (4, '2025-07-20 16:20:00', 12000.00, 'Debit Card', 'TXN987654321'),
+    (5, '2025-07-10 09:05:00', 9000.00, 'Net Banking', 'TXN567890123'),
+    (7, '2025-08-01 15:10:00', 12000.00, 'Credit Card', 'TXN234567890'),
+    (2, '2025-09-01 09:00:00', 6000.00, 'Cash', NULL), -- Partial Payment
+    (2, '2025-09-02 10:00:00', 6000.00, 'Cash', NULL); -- Final Payment
+
+INSERT INTO EmployeeTypes (TypeName, Description)
+VALUES
+    ('Manager', 'Oversees hotel operations'),
+    ('Receptionist', 'Handles guest check-in/out and inquiries'),
+    ('Chef', 'Prepares meals for guests'),
+    ('Housekeeper', 'Maintains cleanliness of rooms and hotel premises'),
+    ('Waiter/Waitress', 'Serves food and beverages'),
+    ('Security Guard', 'Ensures safety and security of guests and property');
+
+INSERT INTO Departments (DepartmentName, DepartmentHeadID)
+VALUES
+    ('Front Office', NULL), -- Head will be assigned later
+    ('Food & Beverage', NULL),
+    ('Housekeeping', NULL),
+    ('Kitchen', NULL),
+    ('Security', NULL),
+    ('Human Resources', NULL);
+
+INSERT INTO Employees (FirstName, LastName, DateOfBirth, Gender, Address, ContactNumber, Email, HireDate, Salary, EmployeeTypeID, ManagerID, DepartmentID)
+VALUES
+    ('Rajesh', 'Kumar', '1970-05-20', 'Male', '123, Gandhi Nagar, Bengaluru', '9988776655', 'rajesh.kumar@example.com', '2010-01-01', 80000.00, 1, NULL, 1), -- General Manager (no manager above)
+    ('Pooja', 'Verma', '1988-10-12', 'Female', '45, Indira Nagar, Bengaluru', '9876512345', 'pooja.verma@example.com', '2018-03-15', 35000.00, 2, 1, 1), -- Receptionist under General Manager
+    ('Suresh', 'Nair', '1975-02-28', 'Male', '78, Koramangala, Bengaluru', '9123456789', 'suresh.nair@example.com', '2012-07-01', 60000.00, 3, 1, 4), -- Chef under General Manager
+    ('Deepa', 'Rao', '1990-09-05', 'Female', '101, JP Nagar, Bengaluru', '8765498765', 'deepa.rao@example.com', '2019-05-01', 25000.00, 4, 1, 3), -- Housekeeper under General Manager
+    ('Vikram', 'Shetty', '1982-01-01', 'Male', '55, HSR Layout, Bengaluru', '9012345678', 'vikram.shetty@example.com', '2015-09-01', 40000.00, 5, 1, 2), -- Waiter under General Manager
+    ('Anil', 'Kumar', '1980-07-18', 'Male', '20, Marathahalli, Bengaluru', '9900112233', 'anil.kumar@example.com', '2017-11-20', 30000.00, 6, 1, 5),  -- Security Guard
+    ('Gayatri', 'Devi', '1993-04-22', 'Female', '60, Residency Road, Bengaluru', '9765432109', 'gayatri.devi@example.com', '2020-02-10', 45000.00, 2, 1, 1); -- Another Receptionist
+
+INSERT INTO Accounts (EmployeeID, BankName, AccountNumber, PayrollFrequency, TaxInformation)
+VALUES
+    (1, 'State Bank of India', '123456789012', 'Monthly', 'PAN: ABCDE1234F'),
+    (2, 'HDFC Bank', '987654321098', 'Monthly', 'PAN: FGHIJ5678K'),
+    (3, 'ICICI Bank', '543210987654', 'Monthly', 'PAN: KLMNO9012P'),
+    (4, 'Axis Bank', '109876543210', 'Monthly', 'PAN: QRSTU3456V'),
+    (5, 'Punjab National Bank', '678901234567', 'Monthly', 'PAN: WXYZA7890B'),
+    (6, 'Canara Bank', '234567890123', 'Monthly', 'PAN: BCDEF2345C'),
+    (7, 'IDBI Bank', '890123456789', 'Monthly', 'PAN: GHIJK6789D');
+
+INSERT INTO MaterialCategories (CategoryName)
+VALUES
+    ('Food Staples'),
+    ('Beverages'),
+    ('Dairy Products'),
+    ('Cleaning Supplies'),
+    ('Guest Amenities'),
+    ('Fresh Produce');
+
+INSERT INTO Suppliers (SupplierName, ContactPerson, ContactNumber, Email, Address)
+VALUES
+    ('Fresh Foods Inc.', 'Rajesh Singh', '080-23456789', 'rajesh@freshfoods.com', '10, Industrial Area, Bengaluru'),
+    ('Beverage World Ltd.', 'Sunita Sharma', '080-98765432', 'sunita@beverageworld.com', '5, Commercial Street, Bengaluru'),
+    ('Hygiene Solutions Co.', 'David Lee', '080-11223344', 'david@hygienesolutions.com', '22, Service Road, Bengaluru'),
+    ('Dairy Delights', 'Priya Patel', '080-55667788', 'priya@dairydelights.com', '15, Dairy Farm Road, Bengaluru'),
+    ('Guest Comforts Pvt. Ltd.', 'Amit Kumar', '080-33445566', 'amit@guestcomforts.com', '30, Logistics Park, Bengaluru');
