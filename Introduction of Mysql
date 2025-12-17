@@ -1,0 +1,259 @@
+Below is a very detailed, easy-to-understand introduction of MySQL focused ONLY on:
+	1. Constraints (Conditions)
+	2. Data Types
+	3. Examples using Indian names
+The explanation is written in simple language, exam-oriented, and is long enough to cover about 5 handwritten pages (or ~4–5 A4 pages).
+You can directly use this for records, assignments, or theory exams.
+
+**INTRODUCTION TO MySQL
+(Constraints and Data Types)**
+1. Introduction to MySQL
+MySQL is an open-source Relational Database Management System (RDBMS) used to store, manage, and retrieve data in an organized manner.
+It uses SQL (Structured Query Language) to interact with the database.
+In MySQL, data is stored in the form of tables, which contain rows and columns.
+Each column has a data type, and each table can have constraints to control the data.
+To maintain data accuracy, consistency, and integrity, MySQL provides:
+	• Data Types → define what kind of data can be stored
+	• Constraints → define rules or conditions on data
+
+2. What are Data Types in MySQL?
+A data type specifies the type of value that a column can store.
+For example:
+	• Name → text
+	• Age → number
+	• Date of Birth → date
+Using correct data types helps to:
+	• Save storage space
+	• Improve performance
+	• Avoid invalid data entry
+
+3. Categories of Data Types in MySQL
+MySQL data types are mainly divided into:
+	1. Numeric Data Types
+	2. String (Character) Data Types
+	3. Date and Time Data Types
+
+4. Numeric Data Types (With Indian Examples)
+Numeric data types are used to store numbers.
+4.1 INT
+	• Used to store whole numbers
+	• Example: roll number, age, marks
+age INT
+Example Table:
+CREATE TABLE student_age (
+    student_id INT,
+    name VARCHAR(50),
+    age INT
+);
+Sample Data:
+	• Rahul – 18
+	• Anjali – 17
+	• Suresh – 19
+
+4.2 BIGINT
+	• Used to store very large numbers
+	• Example: Aadhaar number, large ID numbers
+aadhaar_number BIGINT
+Example:
+CREATE TABLE citizens (
+    name VARCHAR(50),
+    aadhaar_number BIGINT
+);
+Example data:
+	• Ramesh – 987654321012
+	• Sunita – 912345678901
+
+4.3 DECIMAL
+	• Used to store exact decimal values
+	• Example: fees, salary, marks with decimal
+fees DECIMAL(8,2)
+Example:
+CREATE TABLE fees_details (
+    student_name VARCHAR(50),
+    fees DECIMAL(8,2)
+);
+Example:
+	• Mahesh – 4500.50
+	• Priya – 3800.00
+
+5. String (Character) Data Types
+String data types are used to store text.
+
+5.1 CHAR
+	• Fixed-length string
+	• Used when data length is always same
+gender CHAR(1)
+Example:
+	• M
+	• F
+
+5.2 VARCHAR
+	• Variable-length string
+	• Most commonly used
+name VARCHAR(50)
+Example Table:
+CREATE TABLE students (
+    student_id INT,
+    name VARCHAR(50),
+    city VARCHAR(30)
+);
+Example data:
+	• Akash – Bengaluru
+	• Neha – Mumbai
+	• Rohan – Pune
+
+5.3 TEXT
+	• Used to store large text
+	• Example: address, description
+address TEXT
+Example:
+CREATE TABLE employee (
+    name VARCHAR(50),
+    address TEXT
+);
+Example:
+	• Shyam – “Near MG Road, Bengaluru, Karnataka”
+
+6. Date and Time Data Types
+These data types are used to store dates and time.
+
+6.1 DATE
+	• Stores date in YYYY-MM-DD format
+dob DATE
+Example:
+CREATE TABLE student_dob (
+    name VARCHAR(50),
+    dob DATE
+);
+Example:
+	• Kavya – 2006-05-12
+	• Arjun – 2005-11-20
+
+6.2 TIME
+	• Stores time
+login_time TIME
+Example:
+	• 09:30:00
+	• 14:45:10
+
+6.3 DATETIME
+	• Stores both date and time
+created_at DATETIME
+Example:
+CREATE TABLE login_details (
+    username VARCHAR(50),
+    login_time DATETIME
+);
+Example:
+	• Ritu – 2025-01-10 09:15:00
+
+7. What are Constraints in MySQL?
+Constraints are rules or conditions applied to columns to restrict the type of data that can be stored.
+Constraints help to:
+	• Prevent invalid data
+	• Maintain data accuracy
+	• Maintain data integrity
+
+8. Types of Constraints in MySQL
+Common constraints are:
+	1. NOT NULL
+	2. UNIQUE
+	3. PRIMARY KEY
+	4. FOREIGN KEY
+	5. CHECK
+	6. DEFAULT
+
+9. NOT NULL Constraint
+	• Ensures a column cannot have empty values
+name VARCHAR(50) NOT NULL
+Example:
+CREATE TABLE students (
+    student_id INT,
+    name VARCHAR(50) NOT NULL
+);
+ Invalid:
+	• name = NULL
+Valid:
+	• name = “Sanjay”
+
+10. UNIQUE Constraint
+	• Ensures no duplicate values
+email VARCHAR(50) UNIQUE
+Example:
+CREATE TABLE users (
+    username VARCHAR(50),
+    email VARCHAR(50) UNIQUE
+);
+Example:
+	• Amit@gmail.com 
+	• Amit@gmail.com  (duplicate)
+
+11. PRIMARY KEY Constraint
+	• Combines NOT NULL + UNIQUE
+	• Identifies each record uniquely
+student_id INT PRIMARY KEY
+Example:
+CREATE TABLE students (
+    student_id INT PRIMARY KEY,
+    name VARCHAR(50)
+);
+Example:
+	• student_id = 101 
+	• student_id = 101  (duplicate)
+
+12. FOREIGN KEY Constraint
+	• Links one table to another
+	• Maintains relationship between tables
+class_id INT,
+FOREIGN KEY (class_id) REFERENCES classes(class_id)
+Example:
+CREATE TABLE students (
+    student_id INT PRIMARY KEY,
+    name VARCHAR(50),
+    class_id INT,
+    FOREIGN KEY (class_id) REFERENCES classes(class_id)
+);
+Example:
+	• Rohit → Class 10 
+	• Rohit → Class 15  (not exists)
+
+13. CHECK Constraint
+	• Applies a condition on values
+CHECK (age >= 5)
+Example:
+CREATE TABLE students (
+    name VARCHAR(50),
+    age INT CHECK (age >= 5)
+);
+Example:
+	• Age = 10 
+	• Age = 3 
+
+14. DEFAULT Constraint
+	• Assigns a default value if none is provided
+city VARCHAR(30) DEFAULT 'Bengaluru'
+Example:
+CREATE TABLE employees (
+    name VARCHAR(50),
+    city VARCHAR(30) DEFAULT 'Mumbai'
+);
+Example:
+	• If city not entered → Mumbai automatically stored
+
+15. Importance of Data Types and Constraints
+Using correct data types and constraints:
+	• Prevents wrong data entry
+	• Improves database performance
+	• Ensures data reliability
+	• Makes database professional and secure
+
+16. Conclusion
+MySQL data types define what kind of data can be stored, while constraints define rules on that data.
+Together, they ensure accuracy, consistency, and integrity of the database.
+Understanding data types and constraints is very important for:
+	• DBMS exams
+	• Mini projects
+	• Real-world applications
+
+One-Line Exam Conclusion:
+	“In MySQL, data types specify the type of data stored in columns, and constraints apply conditions to maintain data accuracy and integrity.”
