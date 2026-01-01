@@ -1,0 +1,65 @@
+ Amazon S3 Bucket
+(Simple Storage Service)
+Cloud Object Storage in AWS
+ **Slide 2: Introduction**
+Amazon S3 (Simple Storage Service)** is an object storage service provided by **Amazon Web Services
+It enables **secure, scalable, and highly durable storage** of data over the internet.
+S3 is widely used for **backup, application data, and media storage**.
+*Slide 3: What is an S3 Bucket?**
+
+* An **S3 bucket** is a **logical container** used to store objects in Amazon S3.
+* Each bucket is created in a **specific AWS Region**.
+* Bucket names must be **globally unique** across AWS.
+
+Bucket = Container | Object = File
+*Slide 4: Components of S3**
+
+Bucket – Top-level storage container
+Object – Data stored in the bucket (files)
+Key – Unique identifier (object name/path)
+Metadata – Information about the object
+Bucket
+ └── Object (Key + Data + Metadata)
+
+Slide 5: Key Features of Amazon S3
+
+High Durability** – 99.999999999% data durability
+High Availability** – Designed for continuous access
+Scalability** – Supports unlimited storage
+Security** – IAM, Bucket Policies, Encryption
+Versioning** – Maintains multiple versions of objects
+
+Slide 6: S3 Storage Classes
+S3 Standard** – Frequently accessed data
+S3 Intelligent-Tiering** – Automatic cost optimization
+S3 Standard-IA** – Infrequently accessed data
+S3 One Zone-IA** – Single AZ storage
+S3 Glacier** – Long-term archival
+S3 Glacier Deep Archive** – Lowest-cost archival storage
+
+Slide 7: Security in S3
+
+IAM Policies** – User-level access control
+Bucket Policies** – Resource-level permissions
+Encryption at Rest** – SSE-S3, SSE-KMS
+Encryption in Transit** – SSL/TLS
+
+Slide 8: Applications of Amazon S3**
+
+Backup and disaster recovery
+ Static website hosting
+ Mobile and web application storage
+ Media content storage
+ Big data analytics
+
+Slide 9: Advantages of S3 Bucket**
+ Highly reliable and secure
+ Cost-effective pay-as-you-go model
+ Global accessibility
+ Automatic scaling
+ Easy integration with other AWS services
+
+*Slide 10: Conclusion
+
+Amazon S3 is a core AWS storage service** used for object-based data storage.
+It provides high durability, scalability, and security making it suitable for both enterprise and academic use cases
