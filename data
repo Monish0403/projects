@@ -1,0 +1,165 @@
+Recursion Programs in C
+1. Factorial using Recursion
+#include <stdio.h>
+
+int factorial(int n)
+{
+    if (n == 0)
+        return 1;
+
+    return n * factorial(n - 1);
+}
+
+int main()
+{
+    int n;
+
+    printf("Enter a number: ");
+    scanf("%d", &n);
+
+    printf("Factorial = %d", factorial(n));
+
+    return 0;
+}
+
+Example: 5 → Factorial = 120
+2. Fibonacci Series using Recursion
+#include <stdio.h>
+
+int fibonacci(int n)
+{
+    if (n <= 1)
+        return n;
+
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+int main()
+{
+    int n, i;
+
+    printf("Enter number of terms: ");
+    scanf("%d", &n);
+
+    for (i = 0; i < n; i++)
+        printf("%d ", fibonacci(i));
+
+    return 0;
+}
+
+Example: 6 → 0 1 1 2 3 5
+3. Sum of First N Numbers using Recursion
+#include <stdio.h>
+
+int sum(int n)
+{
+    if (n == 0)
+        return 0;
+
+    return n + sum(n - 1);
+}
+
+int main()
+{
+    int n;
+
+    printf("Enter a number: ");
+    scanf("%d", &n);
+
+    printf("Sum = %d", sum(n));
+
+    return 0;
+}
+
+Example: 5 → Sum = 15
+4. Reverse a Number using Recursion
+#include <stdio.h>
+
+int reverse(int n, int rev)
+{
+    if (n == 0)
+        return rev;
+
+    return reverse(n / 10, rev * 10 + n % 10);
+}
+
+int main()
+{
+    int n;
+
+    printf("Enter a number: ");
+    scanf("%d", &n);
+
+    printf("Reverse = %d", reverse(n, 0));
+
+    return 0;
+}
+
+Example: 1234 → Reverse = 4321
+5. GCD using Recursion
+#include <stdio.h>
+
+int gcd(int a, int b)
+{
+    if (b == 0)
+        return a;
+
+    return gcd(b, a % b);
+}
+
+int main()
+{
+    int a, b;
+
+    printf("Enter two numbers: ");
+    scanf("%d %d", &a, &b);
+
+    printf("GCD = %d", gcd(a, b));
+
+    return 0;
+}
+
+Example: 12 18 → GCD = 6
+6. Tower of Hanoi using Recursion
+#include <stdio.h>
+
+void tower(int n, char A, char B, char C)
+{
+    if (n == 1)
+    {
+        printf("Move disk 1 from %c to %c\n", A, C);
+        return;
+    }
+
+    tower(n - 1, A, C, B);
+
+    printf("Move disk %d from %c to %c\n", n, A, C);
+
+    tower(n - 1, B, A, C);
+}
+
+int main()
+{
+    int n;
+
+    printf("Enter number of disks: ");
+    scanf("%d", &n);
+
+    tower(n, 'A', 'B', 'C');
+
+    return 0;
+}
+
+Example: 3 disks → 7 moves
+Basic Recursion Structure
+A recursive function must contain:
+
+1. Base condition – stops the recursion.
+2. Recursive call – the function calls itself with a smaller/simpler value.
+
+Example:
+if (n == 0)
+    return 0;
+
+return n + sum(n - 1);
+
