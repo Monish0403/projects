@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alex Dev | Full-Stack Software Engineer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="container nav-content">
+      <a href="#" class="logo">&lt;AlexDev /&gt;</a>
+      <nav>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+        <a href="#admin" id="admin-nav-btn">Admin</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h1>Building fast, secure &amp; open-source web software.</h1>
+      <p>Full-Stack Developer specializing in clean architecture, REST APIs, and accessible interfaces.</p>
+      <a href="#projects" class="btn primary">Explore My Work</a>
+    </div>
+  </section>
+
+  <section id="projects" class="section container">
+    <h2>Featured Projects</h2>
+    <div id="project-grid" class="grid"></div>
+  </section>
+
+  <section id="contact" class="section container">
+    <h2>Get In Touch</h2>
+    <form id="contact-form" class="card form">
+      <input type="text" id="name" placeholder="Your Name" required />
+      <input type="email" id="email" placeholder="Your Email" required />
+      <textarea id="message" rows="4" placeholder="Project details or inquiry..." required></textarea>
+      <button type="submit" class="btn primary">Send Message</button>
+      <p id="contact-status" class="status-msg"></p>
+    </form>
+  </section>
+
+  <section id="admin" class="section container">
+    <h2>Developer Admin Dashboard</h2>
+    
+    <!-- Login Form -->
+    <form id="login-form" class="card form">
+      <p class="hint">Default Demo Login: <strong>admin</strong> / <strong>Admin@123</strong></p>
+      <input type="text" id="username" placeholder="Admin Username" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <button type="submit" class="btn primary">Login</button>
+      <p id="login-status" class="status-msg"></p>
+    </form>
+
+    <!-- Protected Dashboard (Hidden until logged in) -->
+    <div id="admin-panel" class="hidden">
+      <div class="admin-header">
+        <span>Authenticated as <strong>Admin</strong></span>
+        <button id="logout-btn" class="btn secondary">Logout</button>
+      </div>
+
+      <form id="add-project-form" class="card form">
+        <h3>Add New Project to Database</h3>
+        <input type="text" id="proj-title" placeholder="Project Title" required />
+        <input type="text" id="proj-stack" placeholder="Tech Stack (e.g., HTML, CSS, Node.js)" required />
+        <input type="url" id="proj-url" placeholder="GitHub Repository URL" />
+        <textarea id="proj-desc" rows="3" placeholder="Short description..." required></textarea>
+        <button type="submit" class="btn primary">Publish Project</button>
+      </form>
+
+      <div class="card">
+        <h3>Client Inbox Messages</h3>
+        <div id="messages-list"></div>
+      </div>
+    </div>
+  </section>
+
+  <script src="app.js"></script>
+</body>
+</html>
