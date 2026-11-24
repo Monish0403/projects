@@ -1,0 +1,83 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Node {
+    int data;
+    struct Node* left;
+    struct Node* right;
+} Node;
+
+Node* createNode(int data) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    if (!newNode) {
+        printf("Memory allocation failed\n");
+        exit(1);
+    }
+    newNode->data = data;
+    newNode->left = NULL;
+    newNode->right = NULL;
+    return newNode;
+}
+
+// Insert into a Left-Skewed Tree (every node only has a left child)
+Node* insertLeftSkewed(Node* root, int data) {
+    if (root == NULL) {
+        return createNode(data);
+    }
+    root->left = insertLeftSkewed(root->left, data);
+    return root;
+}
+
+// Insert into a Right-Skewed Tree (every node only has a right child)
+Node* insertRightSkewed(Node* root, int data) {
+    if (root == NULL) {
+        return createNode(data);
+    }
+    root->right = insertRightSkewed(root->right, data);
+    return root;
+}
+
+void printLeftSkewed(Node* root) {
+    while (root != NULL) {
+        printf("%d -> ", root->data);
+        root = root->left;
+    }
+    printf("NULL\n");
+}
+
+void printRightSkewed(Node* root) {
+    while (root != NULL) {
+        printf("%d -> ", root->data);
+        root = root->right;
+    }
+    printf("NULL\n");
+}
+
+void freeTree(Node* root) {
+    if (root == NULL) return;
+    freeTree(root->left);
+    freeTree(root->right);
+    free(root);
+}
+
+int main() {
+    Node* leftRoot = NULL;
+    Node* rightRoot = NULL;
+    int values[] = {10, 20, 30, 40, 50};
+    int n = sizeof(values) / sizeof(values[0]);
+
+    for (int i = 0; i < n; i++) {
+        leftRoot = insertLeftSkewed(leftRoot, values[i]);
+        rightRoot = insertRightSkewed(rightRoot, values[i]);
+    }
+
+    printf("Left-Skewed Tree:  ");
+    printLeftSkewed(leftRoot);
+
+    printf("Right-Skewed Tree: ");
+    printRightSkewed(rightRoot);
+
+    freeTree(leftRoot);
+    freeTree(rightRoot);
+    return 0;
+}
